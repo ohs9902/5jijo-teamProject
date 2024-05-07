@@ -4,11 +4,13 @@ public class Subject {
     private String subjectId;
     private String subjectName;
     private String subjectType;
+    private String studentId;
 
-    public Subject(String seq, String subjectName, String subjectType) {
+    public Subject(String seq, String subjectName, String subjectType, String studentId) {
         this.subjectId = seq;
         this.subjectName = subjectName;
         this.subjectType = subjectType;
+        this.studentId = studentId;
     }
 
     // Getter

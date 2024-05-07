@@ -5,6 +5,7 @@ import camp.model.Student;
 import camp.model.Subject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,9 +19,11 @@ import java.util.Scanner;
  */
 public class CampManagementApplication {
     // 데이터 저장소
-    private static List<Student> studentStore;
-    private static List<Subject> subjectStore;
+    private static List<Student> studentStore = new ArrayList<>();
+    private static List<Subject> subjectStore = new ArrayList<>();
     private static List<Score> scoreStore;
+
+    static Subject subject;
 
     // 과목 타입
     private static String SUBJECT_TYPE_MANDATORY = "MANDATORY";
@@ -42,6 +45,7 @@ public class CampManagementApplication {
         try {
             displayMainView();
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("\n오류 발생!\n프로그램을 종료합니다.");
         }
     }
@@ -49,53 +53,7 @@ public class CampManagementApplication {
     // 초기 데이터 생성
     private static void setInitData() {
         studentStore = new ArrayList<>();
-        subjectStore = List.of(
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "Java",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "객체지향",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "Spring",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "JPA",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "MySQL",
-                        SUBJECT_TYPE_MANDATORY
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "디자인 패턴",
-                        SUBJECT_TYPE_CHOICE
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "Spring Security",
-                        SUBJECT_TYPE_CHOICE
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "Redis",
-                        SUBJECT_TYPE_CHOICE
-                ),
-                new Subject(
-                        sequence(INDEX_TYPE_SUBJECT),
-                        "MongoDB",
-                        SUBJECT_TYPE_CHOICE
-                )
-        );
+        subjectStore = new ArrayList<>();
         scoreStore = new ArrayList<>();
     }
 
@@ -166,13 +124,109 @@ public class CampManagementApplication {
 
     // 수강생 등록
     private static void createStudent() {
+        int count = 1;
+        int input;
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
+
         String studentName = sc.next();
         // 기능 구현 (필수 과목, 선택 과목)
+        String[] mandatory =new String[3];
+        String[] choice =new String[2];
+        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName);
+        String studentId = student.getStudentId();
 
-        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
+        for (int i = 0 ; i < mandatory.length ; i++) {
+            System.out.println("==================================");
+            System.out.println("필수 과목 3과목을 입력해 주세요..."+count +" 번째");
+            System.out.println("1. Java");
+            System.out.println("2. 객체지향");
+            System.out.println("3. Spring");
+            System.out.println("4. JPA");
+            System.out.println("5. MySQL");
+
+            input = sc.nextInt();
+            switch (input) {
+                case 1 :
+                    mandatory[i] = "Java";
+                    subject = new Subject(sequence(INDEX_TYPE_SUBJECT), mandatory[i],SUBJECT_TYPE_MANDATORY,studentId);
+                    subjectStore.add(subject);
+                    break;
+                case 2 :
+                    mandatory[i] = "객체지향";
+                    subject = new Subject(sequence(INDEX_TYPE_SUBJECT), mandatory[i],SUBJECT_TYPE_MANDATORY,studentId);
+                    subjectStore.add(subject);
+                    break;
+                case 3 :
+                    mandatory[i] = "Spring";
+                    subject = new Subject(sequence(INDEX_TYPE_SUBJECT), mandatory[i],SUBJECT_TYPE_MANDATORY,studentId);
+                    subjectStore.add(subject);
+                    break;
+                case 4 :
+                    mandatory[i] = "JPA";
+                    subject = new Subject(sequence(INDEX_TYPE_SUBJECT), mandatory[i],SUBJECT_TYPE_MANDATORY,studentId);
+                   subjectStore.add(subject);
+                    break;
+                case 5 :
+                    mandatory[i] = "MySQL";
+                    subject = new Subject(sequence(INDEX_TYPE_SUBJECT), mandatory[i],SUBJECT_TYPE_MANDATORY,studentId);
+                    subjectStore.add(subject);
+                    break;
+                default:
+                    System.out.println("잘못 입력하셨습니다");
+                    break;
+            }
+            count++;
+        }
+        count = 1;
+        for (int i = 0 ; i < choice.length ; i++) {
+            System.out.println("==================================");
+            System.out.println("선택 과목 2과목을 입력해 주세요..." + count + " 번째");
+            System.out.println("1. 디자인 패턴");
+            System.out.println("2. Spring Security");
+            System.out.println("3. Redis");
+            System.out.println("4. MongoDB");
+            input = sc.nextInt();
+
+            switch (input) {
+                case 1:
+                    choice[i] = "디자인 패턴";
+                    subject = new Subject(sequence(INDEX_TYPE_SUBJECT), choice[i],SUBJECT_TYPE_CHOICE,studentId);
+                    subjectStore.add(subject);
+                    break;
+                case 2:
+                    choice[i] = "Spring Security";
+                    subject = new Subject(sequence(INDEX_TYPE_SUBJECT), choice[i],SUBJECT_TYPE_CHOICE,studentId);
+                    subjectStore.add(subject);
+                    break;
+                case 3:
+                    choice[i] = "Redis";
+                    subject = new Subject(sequence(INDEX_TYPE_SUBJECT), choice[i],SUBJECT_TYPE_CHOICE,studentId);
+                    subjectStore.add(subject);
+                    break;
+                case 4:
+                    choice[i] = "MongoDB";
+                    subject = new Subject(sequence(INDEX_TYPE_SUBJECT), choice[i],SUBJECT_TYPE_CHOICE,studentId);
+                    subjectStore.add(subject);
+                    break;
+                default:
+                    System.out.println("잘못 입력하셨습니다");
+                    break;
+            }
+            count++;
+        }
+
+
+        // 수강생 인스턴스 생성 예시 코드
         // 기능 구현
+
+        studentStore.add(student);
+
+        System.out.println(student.getStudentName()+","+student.getStudentId());
+
+        for(Subject s : subjectStore){
+            System.out.println(s.getSubjectName()+','+s.getSubjectId()+','+s.getSubjectType());
+        }
         System.out.println("수강생 등록 성공!\n");
     }
 
