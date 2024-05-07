@@ -1,7 +1,7 @@
 package camp.model;
 
 public class Score {
-    private String scoreId;
+    private final String scoreId;
 
     public Score(String seq) {
         this.scoreId = seq;
@@ -12,4 +12,19 @@ public class Score {
         return scoreId;
     }
 
+    public Integer getScore() {
+        return Integer.parseInt(scoreId);
+    }
+
+    public Object getSubjectId() {
+        return scoreId;
+    }
+
+    public int getRound() {
+        return Integer.parseInt(scoreId);
+    }
+
+    public Object getStudentId() {
+        return scoreId;
+    }
 }

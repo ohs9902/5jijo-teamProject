@@ -3,6 +3,7 @@ package camp;
 import camp.model.Score;
 import camp.model.Student;
 import camp.model.Subject;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -230,13 +231,124 @@ public class CampManagementApplication {
         System.out.println("\n점수 수정 성공!");
     }
 
+    // --------- 어동선 --------
     // 수강생의 특정 과목 회차별 등급 조회
     private static void inquireRoundGradeBySubject() {
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
         // 기능 구현 (조회할 특정 과목)
-        System.out.println("회차별 등급을 조회합니다...");
-        // 기능 구현
-        System.out.println("\n등급 조회 성공!");
+        System.out.println("조회할 수강생 이름을 입력하세요: ");
+        String studentName = sc.next();
+
+        System.out.print("조회할 과목 이름을 입력하세요: ");
+        String subjectName = sc.next();
+
+        Student student = findStudentByName(studentName);
+        Subject subject = findSubjectByName(subjectName);
+
+        if (studentName == null) {
+            System.out.println("해당 이름의 수강생이 존재하지 않습니다.");
+            return;
+        }
+
+        if (subjectName == null) {
+            System.out.println("해당 이름의 과목이 존재하지 않습니다.");
+            return;
+        }
+
+        System.out.println(studentName + " 수강생의 " + subjectName + " 과목 회차별 등급을 조회합니다...");
+
+        for (int i = 1; i <= 10; i++) {
+            Score score = findScoreByStudentAndSubject(student, subject, i);
+            if (score != null) { // 해당 회차에 대한 점수가 존재하는 경우에만 등급 계산
+                assert subject != null;
+                String grade = calculateGrade(score.getScore(), subject.getSubjectType());
+                System.out.println(i + "회차 " + " 등급: " + grade);
+            } else {
+                System.out.println(i + "회차 " + " 등급: 점수 없음");
+            }
+        }
     }
 
-}
+    // 필수, 선택 과목 분류 후 등급 값 리턴 메서드
+    private static String calculateGrade(int score, String subjectType) {
+        if (subjectType.equals(SUBJECT_TYPE_CHOICE)) {
+            return calculateChoiceSubjectGrade(score);
+        } else if (subjectType.equals(SUBJECT_TYPE_MANDATORY)) {
+            return calculateMandatorySubjectGrade(score);
+        } else {
+            return "등급 계산 기준이 없습니다.";
+        }
+    }
+
+    // 필수 과목 등급 계산
+    private static String calculateMandatorySubjectGrade(int score) {
+        if (score >= 95) {
+            return "A";
+        } else if (score >= 90) {
+            return "B";
+        } else if (score >= 80) {
+            return "C";
+        } else if (score >= 70) {
+            return "D";
+        } else if (score >= 60) {
+            return "F";
+        } else {
+            return "N";
+        }
+    }
+
+    // 선택 과목 등급 계산
+    private static String calculateChoiceSubjectGrade(int score) {
+        if (score >= 90) {
+            return "A";
+        } else if (score >= 80) {
+            return "B";
+        } else if (score >= 70) {
+            return "C";
+        } else if (score >= 60) {
+            return "D";
+        } else if (score >= 50) {
+            return "F";
+        } else {
+            return "N";
+        }
+    }
+
+    // 해당 이름의 수강생을 찾아서 반환하는 메서드
+    private static Student findStudentByName(String studentName) {
+        for (Student student : studentStore) {
+            if (student.getStudentName().equals(studentName)) {
+                return student;
+            }
+        }
+        return null; // 해당 이름의 수강생이 없는 경우
+    }
+
+    // 해당 이름의 과목을 찾아서 반환하는 메서드
+    private static Subject findSubjectByName(String subjectName) {
+        for (Subject subject : subjectStore) {
+            if (subject.getSubjectName().equals(subjectName)) {
+                return subject;
+            }
+        }
+        return null; // 해당 이름의 과목이 없는 경우
+    }
+
+    private static Score findScoreByStudentAndSubject(Student student, Subject subject, int round) {
+        for (Score score : scoreStore) {
+            if (score.getSubjectId().equals(subject.getSubjectId()) && score.getStudentId().equals(student.getStudentId())) {
+                // 해당 수강생과 과목에 해당하는 점수인 경우
+                // 여기에서 점수가 몇 회차인지 확인해야 함
+                // 여기에서 점수가 몇 회차인지 확인해야 함
+                // 이 부분은 해당 메서드의 구현에 따라 달라질 수 있음
+                // 이 예시에서는 getRound() 메서드를 이용하여 점수의 회차를 가져옴
+                if (score.getRound() == round) {
+                    return score;
+                }
+            }
+        }
+        return null; // 해당 수강생과 과목에 해당하는 회차의 점수가 없는 경우
+
+    }
+    // --------- 어동선 --------
+
+} // 맨 마지막
