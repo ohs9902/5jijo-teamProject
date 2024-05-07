@@ -103,6 +103,8 @@ public class ScoreManagement {
             return 'N';
         }
     }
+
+    //회차별 특정과목 등급 조회
     public void inquireRoundGradeBySubject (){
         System.out.println("수강생 번호를 입력하세요 : ");
         String studentId = sc.next(); // 관리할 수강생 고유 번호
@@ -111,6 +113,7 @@ public class ScoreManagement {
         if (!studentId.equals("empty")) {
             System.out.println("조회할 과목을 입력하세요 :");
             int count = 0;
+
             ArrayList<Subject> sub = new ArrayList<>();
             for (Subject subject : InitData.getSubjectStore()) {
                 if(subject.getStudentId().equals(studentId)){
@@ -119,8 +122,10 @@ public class ScoreManagement {
                     System.out.println(count+"."+subject.getSubjectName());
                 }
             }
+
             int selectNum = 0;
             selectNum = sc.nextInt();
+
             Subject sub2;
 
             if (selectNum < 1 || selectNum > sub.size()) {
@@ -130,17 +135,17 @@ public class ScoreManagement {
             sub2 = sub.get(selectNum-1);
 
             System.out.println(sub2.getSubjectName());
-
-
+            boolean subjectOk = false;
             //과목 유효성 검사
             for (Subject subject1 : InitData.getSubjectStore()) {
                 if (sub2.getSubjectId().equals(subject1.getSubjectId())) {
+                    System.out.println("과목 유효성 검사...");
+                    subjectOk = true;
                     break;
-                }else{
-                    sub2 = null;
                 }
             }
-            if (sub2 != null) {
+
+            if (subjectOk) {
                 System.out.println("회차별 등급을 조회합니다...");
 
                 for (Score score1 : InitData.getScoreStore()) {
@@ -149,8 +154,6 @@ public class ScoreManagement {
                     }
                 }
                 System.out.println("\n등급 조회 성공!");
-            } else {
-                System.out.println("존재하지 않는 과목입니다.");
             }
         } else {
             System.out.println("입력한 학생번호가 존재하지 않습니다.");
