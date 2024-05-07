@@ -3,7 +3,6 @@ package camp;
 import camp.model.Score;
 import camp.model.Student;
 import camp.model.Subject;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -238,15 +237,24 @@ public class CampManagementApplication {
         System.out.println("조회할 수강생 이름을 입력하세요: ");
         String studentName = sc.next();
 
+
+        System.out.println("고유번호를 입력하세요: ");
+        String studentId = sc.next();
+
+        Student student = findStudentByName(studentName, studentId);
+
         System.out.print("조회할 과목 이름을 입력하세요: ");
         String subjectName = sc.next();
 
-        Student student = findStudentByName(studentName);
         Subject subject = findSubjectByName(subjectName);
 
         if (studentName == null) {
             System.out.println("해당 이름의 수강생이 존재하지 않습니다.");
             return;
+        }
+
+        if (studentId == null) {
+            System.out.println("해당 고유번호가 존재하지 않습니다.");
         }
 
         if (subjectName == null) {
@@ -313,10 +321,15 @@ public class CampManagementApplication {
         }
     }
 
-    // 해당 이름의 수강생을 찾아서 반환하는 메서드
-    private static Student findStudentByName(String studentName) {
+    // 해당 이름의 수강생, 고유번호를 찾아서 반환하는 메서드
+    private static Student findStudentByName(String studentName, String studentId) {
         for (Student student : studentStore) {
             if (student.getStudentName().equals(studentName)) {
+                return student;
+            }
+        }
+        for (Student student : studentStore) {
+            if (student.getStudentId().equals(studentId)) {
                 return student;
             }
         }
