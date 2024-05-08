@@ -65,6 +65,8 @@ public class CampManagementApplication {
             System.out.println("2. 수강생 목록 조회");
             System.out.println("3. 수강생 삭제");
             System.out.println("4. 메인 화면 이동");
+            System.out.println("3. 수강생 정보 변경");
+            System.out.println("4. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
@@ -73,6 +75,7 @@ public class CampManagementApplication {
                 case 2 -> stm.inquireStudent(); // 수강생 목록 조회
                 case 3 -> stm.deleteStudent(); // 수강생 삭제
                 case 4 -> flag = false; // 메인 화면 이동
+                case 3 -> stm.adjustStudent(); // 수강생 정보 수정(이름, 상태)
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
@@ -89,8 +92,7 @@ public class CampManagementApplication {
             System.out.println("1. 수강생의 과목별 시험 회차 및 점수 등록");
             System.out.println("2. 수강생의 과목별 회차 점수 수정");
             System.out.println("3. 수강생의 특정 과목 회차별 등급 조회");
-            System.out.println("4. 수강생의 과목별 평균 등급 조회");
-            System.out.println("5. 메인 화면 이동");
+            System.out.println("4. 메인 화면 이동");
             System.out.print("관리 항목을 선택하세요...");
             int input = sc.nextInt();
 
@@ -98,9 +100,8 @@ public class CampManagementApplication {
                 case 1 -> scm.createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
                 case 2 -> scm.updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
                 case 3 -> scm.inquireRoundGradeBySubject();
-                case 4 -> scm.inquireAverageRank();
                 // 수강생의 특정 과목 회차별 등급 조회
-                case 5 -> flag = false; // 메인 화면 이동
+                case 4 -> flag = false; // 메인 화면 이동
                 default -> {
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;

@@ -1,6 +1,5 @@
 package camp.model;
 
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class StudentManagement {
@@ -125,25 +124,84 @@ public class StudentManagement {
         System.out.println("\n수강생을 삭제합니다...");
         System.out.print("삭제할 수강생의 학생번호를 입력하세요: ");
         String studentId = sc.next();
+    public void adjustStudent() {
+        int input = 0;
+        System.out.println("==================================");
+        System.out.println("수강생의 정보를 변경하기 위한 창입니다. 변경을 원하시는 데이터를 입력해주세요.");
+        System.out.println("1. 이름 ");
+        System.out.println("2. 상태 ");
+        System.out.println("3. 메인메뉴로 돌아갑니다. ");
+        input = sc.nextInt();
 
-        Iterator<Student> studentIterator = InitData.getStudentStore().iterator();
-        while (studentIterator.hasNext()) {
-            Student student = studentIterator.next();
-            if (student.getStudentId().equals(studentId)) {
-                // 해당 수강생의 모든 점수 기록 삭제
-                Iterator<Subject> subjectIterator = InitData.getSubjectStore().iterator();
-                while (subjectIterator.hasNext()) {
-                    Subject subject = subjectIterator.next();
-                    if (subject.getStudentId().equals(studentId)) {
-                        subjectIterator.remove();
+        switch (input) {
+            case 1 -> adjustStudentName();
+            case 2 -> adjustStudentCondition();
+        }
+
+    }
+    //학생 이름 수정 메서드(빈 리스트 및 ST로 미입력시 fail, 잘못 입력했을때의 구현은x)
+    public void adjustStudentName() {
+        String stid;
+        String stname;
+        if (InitData.getStudentStore().isEmpty()) {
+            System.out.println("수강생 목록이 비어 있습니다. 수강생 등록 먼저 진행해 주세요");
+        } else {
+            System.out.println("==================================");
+            System.out.println("이름 변경하기를 선택 하셨습니다. 변경하실 이름의 수강생 번호(ST%)를 입력 해주세요");
+            stid = sc.next();
+
+            if (stid.contains("ST")) {
+                System.out.println("변경전 이름 ");
+                for (Student s : InitData.getStudentStore()) {
+                    if (s.getStudentId().equals(stid)) {
+                        System.out.println(s.getStudentName());
                     }
                 }
-                studentIterator.remove();
-                System.out.println("수강생 삭제 완료!");
-                return;
+
+                System.out.println("변경하실 이름을 입력 해주세요");
+                stname = sc.next();
+
+                System.out.println("변경후 이름 이름 ");
+                for (Student s : InitData.getStudentStore()) {
+                    if (s.getStudentId().equals(stid)) {
+                        s.setStudentName(stname);
+                        System.out.println(s.getStudentName());
+                    }
+                }
+                System.out.println("변경완료 ");
+            } else {
+                System.out.println("잘못 입력 하셨습니다.");
             }
         }
-        System.out.println("해당하는 학생을 찾을 수 없습니다.");
     }
+    //수강생 상태 변경하는 메서드
+    public void adjustStudentCondition() {
+        String stid;
+        int input = 0;
+        //boolean check = true;
+        if (InitData.getStudentStore().isEmpty()) {
+            System.out.println("수강생 목록이 비어 있습니다. 수강생 등록 먼저 진행해 주세요");
+        } else {
+
+            System.out.println("==================================");
+            System.out.println("상태 변경하기를 선택 하셨습니다. 변경하실 이름의 수강생 번호(ST%)를 입력 해주세요");
+            stid = sc.next();
+            if (stid.contains("ST")) {
+
+                for (Student s : InitData.getStudentStore()) {
+                    if (s.getStudentId().equals(stid)) {
+                        System.out.println("변경전 상태");
+                        System.out.println(s.getCondition());
+                    }
+                }
+
+
+                System.out.println("어떤 상태로 변경 하시겠습니까?");
+                System.out.println("1. Green : Good");
+                System.out.println("2. Yellow : So So");
+                System.out.println("3. Red : Bad");
+
+                input = sc.nextInt();
+
 
 }

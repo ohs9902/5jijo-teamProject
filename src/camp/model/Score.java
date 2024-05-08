@@ -47,7 +47,6 @@ public class Score {
         return times;
     }
 
-
     public char getRank() {
         return rank;
     }

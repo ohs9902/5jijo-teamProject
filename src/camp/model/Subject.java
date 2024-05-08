@@ -28,7 +28,6 @@ public class Subject {
         return subjectType;
     }
 
-    public String getStudentId() {
-        return studentId;
-    }
+    public String getStudentId() {return studentId;}
+
 }
