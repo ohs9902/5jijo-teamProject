@@ -1,5 +1,6 @@
 package camp;
 
+import camp.model.InitData;
 import camp.model.Score;
 import camp.model.Student;
 import camp.model.Subject;
@@ -176,15 +177,15 @@ public class CampManagementApplication {
         System.out.println("수강생 등록 성공!\n");
     }
 
-    // ----이인빈
+    // ----이인빈--------------------------------------------
     // 수강생 목록 조회
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
         for (Student student : studentStore) {
-            System.out.println("고유 번호: " + student.getStudentId());
-            System.out.println("이름 : " + student.getStudentName());
-            System.out.println();
-            System.out.println();
+            System.out.println("고유 번호 : " + student.getStudentId() + "이름 : " + student.getStudentName() + "상태 : " + student.getCondition());
+        }
+        for (Subject subject : subjectStore) {
+            System.out.println("선택한 과목명 : " + subject.getSubjectName());
         }
         System.out.println("\n수강생 목록 조회 성공!");
     }
