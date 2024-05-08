@@ -8,6 +8,14 @@ public class Score {
     private int score;
     private char rank;
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setRank(char rank) {
+        this.rank = rank;
+    }
+
     public String getSubjectId() {
         return subjectId;
     }

@@ -37,13 +37,7 @@ public class ScoreManagement {
             InitData.getScoreStore().add(new Score(InitData.sequence(InitData.getIndexTypeScore()),sub2.getSubjectId(),studentId,times,score,rank));
 
             System.out.println("점수 등록 완료!!");
-            for (Score score1 : InitData.getScoreStore()) {
-                System.out.println(score1.getScore());
-                System.out.println(score1.getTimes());
-                System.out.println(score1.getScoreId());
 
-                System.out.println(score1.getRank());
-            }
         }else{
             System.out.println("없는 학생번호 입니다.");
         }
@@ -104,6 +98,82 @@ public class ScoreManagement {
         }
     }
 
+    // 수강생의 과목별 회차 점수 수정
+    public void updateRoundScoreBySubject() {
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+
+        // 해당 수강생이 존재하는지 확인
+        Student student = findStudentById(studentId);
+        if (student != null) {
+            System.out.println("\n수정할 과목을 선택하세요:");
+            List<Subject> sub = displaySubjects(studentId); // 모든 과목 목록을 보여줌
+
+            System.out.print("과목 번호를 입력하세요: ");
+            int subjectIndex = sc.nextInt();
+
+            // 입력한 번호에 해당하는 과목을 찾아옴
+            Subject selectedSubject = sub.get(subjectIndex - 1);
+            System.out.println(selectedSubject.getSubjectName());
+            if (selectedSubject != null) {
+
+                System.out.print("수정할 회차를 입력하세요: ");
+                int round = sc.nextInt();
+                // 해당 수강생의 해당 과목 점수 조회
+
+
+                System.out.print("수정할 점수를 입력하세요: ");
+                int newScore = sc.nextInt();
+                boolean roundOk = false;
+                for (Score score : InitData.getScoreStore()) {
+                    // 기존 점수를 업데이트
+                    if (score.getStudentId().equals(studentId) && score.getSubjectId().equals(selectedSubject.getSubjectId()) && score.getTimes() == round) {
+                        score.setScore(newScore);
+                        score.setRank(calculateGrade(newScore,selectedSubject.getSubjectType()));
+                        roundOk = true;
+
+                        break;
+                    }
+                }
+                if (roundOk){
+                    System.out.println("시험 점수가 수정되었습니다.");
+                }else{
+                    System.out.println("해당 회차가 없습니다.");
+                }
+
+            } else {
+                System.out.println("\n해당 수강생의 " + selectedSubject.getSubjectName() + " 과목 시험 점수가 없습니다.");
+            }
+        } else {
+            System.out.println("\n해당하는 학생을 찾을 수 없습니다.");
+        }
+    }
+
+    // 모든 과목을 화면에 출력하는 메서드
+    public ArrayList<Subject> displaySubjects(String studentId) {
+        System.out.println("==================================");
+        System.out.println("과목 목록:");
+        ArrayList<Subject> sub = new ArrayList<>(); //조회용 과목들을 담을 리스트
+        int count = 0;
+        for (Subject subject : InitData.getSubjectStore()) {
+            if(subject.getStudentId().equals(studentId)){
+                count++;
+                sub.add(subject);
+                System.out.println(count+"."+subject.getSubjectName());
+            }
+        }
+        return sub;
+    }
+
+    // 수강생 ID로 수강생 찾기
+    public Student findStudentById(String studentId) {
+        for (Student student : InitData.getStudentStore()) {
+            if (student.getStudentId().equals(studentId)) {
+                return student;
+            }
+        }
+        return null;
+    }
+
     //회차별 특정과목 등급 조회
     public void inquireRoundGradeBySubject (){
         System.out.println("수강생 번호를 입력하세요 : ");
@@ -113,8 +183,7 @@ public class ScoreManagement {
         if (!studentId.equals("empty")) {
             System.out.println("조회할 과목을 입력하세요 :");
             int count = 0;
-
-            ArrayList<Subject> sub = new ArrayList<>();
+            ArrayList<Subject> sub = new ArrayList<>(); //조회용 과목들을 담을 리스트
             for (Subject subject : InitData.getSubjectStore()) {
                 if(subject.getStudentId().equals(studentId)){
                     count++;
@@ -169,6 +238,11 @@ public class ScoreManagement {
             }
         }
         return scores.size()+1;
+    }
+
+    public String getStudentId() {
+        System.out.print("\n관리할 수강생의 번호를 입력하시오...");
+        return sc.next();
     }
 
 

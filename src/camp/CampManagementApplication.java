@@ -93,7 +93,7 @@ public class CampManagementApplication {
 
             switch (input) {
                 case 1 -> scm.createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
-                case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
+                case 2 -> scm.updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
                 case 3 -> scm.inquireRoundGradeBySubject();
                 // 수강생의 특정 과목 회차별 등급 조회
                 case 4 -> flag = false; // 메인 화면 이동
@@ -105,19 +105,8 @@ public class CampManagementApplication {
         }
     }
 
-    private static String getStudentId() {
-        System.out.print("\n관리할 수강생의 번호를 입력하시오...");
-        return sc.next();
-    }
 
-    // 수강생의 과목별 회차 점수 수정
-    private static void updateRoundScoreBySubject() {
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        // 기능 구현 (수정할 과목 및 회차, 점수)
-        System.out.println("시험 점수를 수정합니다...");
-        // 기능 구현
-        System.out.println("\n점수 수정 성공!");
-    }
+
 
 
     // 수강생 목록 조회

@@ -6,9 +6,7 @@ public class Subject {
     private String subjectType;
     private String studentId;
 
-    public String getStudentId() {
-        return studentId;
-    }
+
 
     public Subject(String seq, String subjectName, String subjectType, String studentId) {
         this.subjectId = seq;
@@ -30,4 +28,7 @@ public class Subject {
         return subjectType;
     }
 
+    public String getStudentId() {
+        return studentId;
+    }
 }
