@@ -1,5 +1,6 @@
 package camp.model;
 
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class StudentManagement {
@@ -119,6 +120,30 @@ public class StudentManagement {
         System.out.println("\n수강생 목록 조회 성공!");
     }
 
+    // 수강생 삭제
+    public void deleteStudent() {
+        System.out.println("\n수강생을 삭제합니다...");
+        System.out.print("삭제할 수강생의 학생번호를 입력하세요: ");
+        String studentId = sc.next();
 
+        Iterator<Student> studentIterator = InitData.getStudentStore().iterator();
+        while (studentIterator.hasNext()) {
+            Student student = studentIterator.next();
+            if (student.getStudentId().equals(studentId)) {
+                // 해당 수강생의 모든 점수 기록 삭제
+                Iterator<Subject> subjectIterator = InitData.getSubjectStore().iterator();
+                while (subjectIterator.hasNext()) {
+                    Subject subject = subjectIterator.next();
+                    if (subject.getStudentId().equals(studentId)) {
+                        subjectIterator.remove();
+                    }
+                }
+                studentIterator.remove();
+                System.out.println("수강생 삭제 완료!");
+                return;
+            }
+        }
+        System.out.println("해당하는 학생을 찾을 수 없습니다.");
+    }
 
 }
