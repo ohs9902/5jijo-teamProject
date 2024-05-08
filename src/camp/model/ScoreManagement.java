@@ -1,20 +1,16 @@
 package camp.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class ScoreManagement {
     Scanner sc = new Scanner(System.in);
     //점수 등록
     public void createScore(){
         int score = 0;
-        System.out.println("수강생 번호를 입력하세요 : ");
-        String studentId = sc.next();
+        String studentId = getStudentId();
         studentId = validationStudentId(studentId);
 
-        if(!studentId.equals("empty")){
+        if(studentId != null){
             int count = 0;
             ArrayList<Subject> sub = new ArrayList<>();
             for (Subject subject : InitData.getSubjectStore()) {
@@ -51,7 +47,7 @@ public class ScoreManagement {
                 return studentId;
             }
         }
-        return "empty";
+        return null;
     }
 
 
@@ -101,7 +97,7 @@ public class ScoreManagement {
     // 수강생의 과목별 회차 점수 수정
     public void updateRoundScoreBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-
+        studentId = validationStudentId(studentId);
         // 해당 수강생이 존재하는지 확인
         Student student = findStudentById(studentId);
         if (student != null) {
@@ -176,11 +172,10 @@ public class ScoreManagement {
 
     //회차별 특정과목 등급 조회
     public void inquireRoundGradeBySubject (){
-        System.out.println("수강생 번호를 입력하세요 : ");
-        String studentId = sc.next(); // 관리할 수강생 고유 번호
+        String studentId = getStudentId(); // 관리할 수강생 고유 번호
         // 기능 구현 (조회할 특정 과목)
         studentId = validationStudentId(studentId);
-        if (!studentId.equals("empty")) {
+        if (studentId != null) {
             System.out.println("조회할 과목을 입력하세요 :");
             int count = 0;
             ArrayList<Subject> sub = new ArrayList<>(); //조회용 과목들을 담을 리스트
@@ -223,10 +218,47 @@ public class ScoreManagement {
                     }
                 }
                 System.out.println("\n등급 조회 성공!");
+            }else{
+                System.out.println("해당 과목이 존재하지 않습니다.");
             }
         } else {
             System.out.println("입력한 학생번호가 존재하지 않습니다.");
         }
+    }
+
+    //과목 별 평균 등급 조회
+    public void inquireAverageRank(){
+        String studentId = getStudentId();
+        studentId = validationStudentId(studentId);
+        if(studentId != null){
+            System.out.println("\n평균을 조회할 과목을 선택하세요:");
+            List<Subject> sub = displaySubjects(studentId); // 과목 목록을 보여줌
+
+            System.out.print("과목 번호를 입력하세요: ");
+            int subjectIndex = sc.nextInt();
+
+            // 입력한 번호에 해당하는 과목을 찾아옴
+            Subject selectedSubject = sub.get(subjectIndex - 1);
+            System.out.println(selectedSubject.getSubjectName());
+            if (selectedSubject != null) {
+                ArrayList<Integer> studentScore = new ArrayList<>();
+                for (Score score : InitData.getScoreStore()) {
+                    if(studentId.equals(score.getStudentId()) && selectedSubject.getSubjectId().equals(score.getSubjectId())){
+                        studentScore.add(score.getScore());
+                    }
+                }
+                int average = (int)studentScore.stream().mapToInt(num -> num).summaryStatistics().getAverage();
+                char averageRank = calculateGrade(average, selectedSubject.getSubjectType());
+                System.out.println(selectedSubject.getSubjectName()+" 과목   평균점수 : " + average + " 평균등급 : " + averageRank);
+            }else{
+                System.out.println("해당 과목이 존재하지 않습니다.");
+            }
+
+
+        }else{
+            System.out.println("입력한 학생번호가 존재하지 않습니다.");
+        }
+
     }
 
     //시험 회차를 반환하는 메서드
