@@ -20,6 +20,12 @@ public class InitData {
     private static int scoreIndex;
     private static final String INDEX_TYPE_SCORE = "SC";
 
+    //condition 관리 필드
+    private static final String CONDITION_RED = "Red";
+    private static final String CONDITION_GREEN = "Green";
+    private static final String CONDITION_YELLOW = "Yellow";
+
+    //Getter
     public static List<Student> getStudentStore() {
         return studentStore;
     }
@@ -50,8 +56,12 @@ public class InitData {
         return INDEX_TYPE_SCORE;
     }
 
+    public static String getConditionRed() { return CONDITION_RED; }
+    public static String getConditionGreen() { return CONDITION_GREEN; }
+    public static String getConditionYellow() { return CONDITION_YELLOW; }
 
 
+    //Setter
     public static void setInitData() {
         studentStore = new ArrayList<>();
         subjectStore = new ArrayList<>();

@@ -171,6 +171,4 @@ public class ScoreManagement {
         return scores.size()+1;
     }
 
-
-
 }
