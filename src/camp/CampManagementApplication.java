@@ -215,11 +215,6 @@ public class CampManagementApplication {
             }
             count++;
         }
-
-
-        // 수강생 인스턴스 생성 예시 코드
-        // 기능 구현
-
         studentStore.add(student);
 
         System.out.println(student.getStudentName()+","+student.getStudentId());
