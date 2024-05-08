@@ -261,6 +261,61 @@ public class ScoreManagement {
 
     }
 
+    //특정 수강생들 필수과목 평균 등급
+    public void inquireAverageByStatus(){
+        System.out.println("상태를 입력하세요 : ");
+        System.out.println("1.Green");
+        System.out.println("2.Yellow");
+        System.out.println("3.Red");
+        String condition = "";
+        int select = sc.nextInt();
+
+        switch(select){
+            case 1:
+                condition = InitData.getConditionGreen();
+                break;
+            case 2:
+                condition = InitData.getConditionYellow();
+                break;
+            case 3:
+                condition = InitData.getConditionRed();
+                break;
+        }
+        List<Student> students = new ArrayList<>();
+        List<Subject> subjects = new ArrayList<>();
+        List<String> studentIds = new ArrayList<>();
+        List<Integer> conditionScore = new ArrayList<>();
+
+        //입력한 상태의 학생 학번 수집
+        for (Student student : InitData.getStudentStore()) {
+            if(student.getCondition().equals(condition)){
+                studentIds.add(student.getStudentId());
+            }
+        }
+
+        //필수과목 저장
+        for (String studentId : studentIds) {
+            for (Subject subject : InitData.getSubjectStore()) {
+                if(subject.getSubjectType().equals(InitData.getSubjectTypeMandatory()) && studentId.equals(subject.getStudentId()))
+                    subjects.add(subject);
+            }
+        }
+
+
+        for (Score score : InitData.getScoreStore()) {
+            for (Subject subject : subjects) {
+                if(subject.getStudentId().equals(score.getStudentId())){
+                    conditionScore.add(score.getScore());
+                }
+            }
+        }
+
+        int average = (int)conditionScore.stream().mapToInt(num -> num).summaryStatistics().getAverage();
+        char averageRank = calculateMandatorySubjectGrade(average);
+        System.out.println(condition + "상태의 학생들 필수과목 평균점수 : " + average + " 평균 등급 : " + averageRank);
+
+    }
+
     //시험 회차를 반환하는 메서드
     public int getTestTimes(String studentIdInput, String subjectIdInput){
         List<Score> scores = new ArrayList<>();

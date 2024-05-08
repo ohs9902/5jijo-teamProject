@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class StudentManagement {
     Scanner sc = new Scanner(System.in);
+
     // 수강생 등록
     public void createStudent() {
         int count = 1;
@@ -14,14 +15,14 @@ public class StudentManagement {
         String studentName = sc.next();
         // 기능 구현 (필수 과목, 선택 과목)
         Subject subject;
-        String[] mandatory =new String[3];
-        String[] choice =new String[2];
+        String[] mandatory = new String[3];
+        String[] choice = new String[2];
         Student student = new Student(InitData.sequence(InitData.getIndexTypeStudent()), studentName);
         String studentId = student.getStudentId();
 
-        for (int i = 0 ; i < mandatory.length ; i++) {
+        for (int i = 0; i < mandatory.length; i++) {
             System.out.println("==================================");
-            System.out.println("필수 과목 3과목을 입력해 주세요..."+count +" 번째");
+            System.out.println("필수 과목 3과목을 입력해 주세요..." + count + " 번째");
             System.out.println("1. Java");
             System.out.println("2. 객체지향");
             System.out.println("3. Spring");
@@ -30,29 +31,29 @@ public class StudentManagement {
 
             input = sc.nextInt();
             switch (input) {
-                case 1 :
+                case 1:
                     mandatory[i] = "Java";
-                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i],InitData.getSubjectTypeMandatory(),studentId);
+                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i], InitData.getSubjectTypeMandatory(), studentId);
                     InitData.getSubjectStore().add(subject);
                     break;
-                case 2 :
+                case 2:
                     mandatory[i] = "객체지향";
-                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i],InitData.getSubjectTypeMandatory(),studentId);
+                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i], InitData.getSubjectTypeMandatory(), studentId);
                     InitData.getSubjectStore().add(subject);
                     break;
-                case 3 :
+                case 3:
                     mandatory[i] = "Spring";
-                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i],InitData.getSubjectTypeMandatory(),studentId);
+                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i], InitData.getSubjectTypeMandatory(), studentId);
                     InitData.getSubjectStore().add(subject);
                     break;
-                case 4 :
+                case 4:
                     mandatory[i] = "JPA";
-                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i],InitData.getSubjectTypeMandatory(),studentId);
+                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i], InitData.getSubjectTypeMandatory(), studentId);
                     InitData.getSubjectStore().add(subject);
                     break;
-                case 5 :
+                case 5:
                     mandatory[i] = "MySQL";
-                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i],InitData.getSubjectTypeMandatory(),studentId);
+                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i], InitData.getSubjectTypeMandatory(), studentId);
                     InitData.getSubjectStore().add(subject);
                     break;
                 default:
@@ -62,7 +63,7 @@ public class StudentManagement {
             count++;
         }
         count = 1;
-        for (int i = 0 ; i < choice.length ; i++) {
+        for (int i = 0; i < choice.length; i++) {
             System.out.println("==================================");
             System.out.println("선택 과목 2과목을 입력해 주세요..." + count + " 번째");
             System.out.println("1. 디자인 패턴");
@@ -74,22 +75,22 @@ public class StudentManagement {
             switch (input) {
                 case 1:
                     choice[i] = "디자인 패턴";
-                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), choice[i],InitData.getSubjectTypeChoice(),studentId);
+                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), choice[i], InitData.getSubjectTypeChoice(), studentId);
                     InitData.getSubjectStore().add(subject);
                     break;
                 case 2:
                     choice[i] = "Spring Security";
-                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), choice[i],InitData.getSubjectTypeChoice(),studentId);
+                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), choice[i], InitData.getSubjectTypeChoice(), studentId);
                     InitData.getSubjectStore().add(subject);
                     break;
                 case 3:
                     choice[i] = "Redis";
-                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), choice[i],InitData.getSubjectTypeChoice(),studentId);
+                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), choice[i], InitData.getSubjectTypeChoice(), studentId);
                     InitData.getSubjectStore().add(subject);
                     break;
                 case 4:
                     choice[i] = "MongoDB";
-                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), choice[i],InitData.getSubjectTypeChoice(),studentId);
+                    subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), choice[i], InitData.getSubjectTypeChoice(), studentId);
                     InitData.getSubjectStore().add(subject);
                     break;
                 default:
@@ -104,18 +105,19 @@ public class StudentManagement {
 
         InitData.getStudentStore().add(student);
 
-        System.out.println(student.getStudentName()+","+student.getStudentId());
+        System.out.println(student.getStudentName() + "," + student.getStudentId());
 
-        for(Subject s : InitData.getSubjectStore()){
-            System.out.println(s.getSubjectName()+','+s.getSubjectId()+','+s.getSubjectType());
+        for (Subject s : InitData.getSubjectStore()) {
+            System.out.println(s.getSubjectName() + ',' + s.getSubjectId() + ',' + s.getSubjectType());
         }
         System.out.println("수강생 등록 성공!\n");
     }
+
     public void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
         // 기능 구현
-        InitData.getStudentStore().forEach(student -> System.out.println("학생번호 : "+student.getStudentId() +
-                " 이름 : "+ student.getStudentName()));
+        InitData.getStudentStore().forEach(student -> System.out.println("학생번호 : " + student.getStudentId() +
+                " 이름 : " + student.getStudentName()));
         System.out.println("\n수강생 목록 조회 성공!");
     }
 
@@ -124,7 +126,9 @@ public class StudentManagement {
         System.out.println("\n수강생을 삭제합니다...");
         System.out.print("삭제할 수강생의 학생번호를 입력하세요: ");
         String studentId = sc.next();
-    public void adjustStudent() {
+    }
+
+    public void adjustStudent () {
         int input = 0;
         System.out.println("==================================");
         System.out.println("수강생의 정보를 변경하기 위한 창입니다. 변경을 원하시는 데이터를 입력해주세요.");
@@ -134,12 +138,12 @@ public class StudentManagement {
         input = sc.nextInt();
 
         switch (input) {
-            case 1 -> adjustStudentName();
+            case 1 -> adjustStudent();
             case 2 -> adjustStudentCondition();
         }
-
     }
     //학생 이름 수정 메서드(빈 리스트 및 ST로 미입력시 fail, 잘못 입력했을때의 구현은x)
+
     public void adjustStudentName() {
         String stid;
         String stname;
@@ -174,8 +178,9 @@ public class StudentManagement {
             }
         }
     }
+
     //수강생 상태 변경하는 메서드
-    public void adjustStudentCondition() {
+    public void adjustStudentCondition () {
         String stid;
         int input = 0;
         //boolean check = true;
@@ -195,13 +200,36 @@ public class StudentManagement {
                     }
                 }
 
-
                 System.out.println("어떤 상태로 변경 하시겠습니까?");
                 System.out.println("1. Green : Good");
                 System.out.println("2. Yellow : So So");
                 System.out.println("3. Red : Bad");
-
                 input = sc.nextInt();
 
-
+                for (Student s : InitData.getStudentStore()) {
+                    if (s.getStudentId().equals(stid)) {
+                        switch (input) {
+                            case 1:
+                                s.setCondition(InitData.getConditionGreen());
+                                System.out.println("변경을 완료 했습니다.");
+                                break;
+                            case 2:
+                                s.setCondition(InitData.getConditionYellow());
+                                System.out.println("변경을 완료 했습니다.");
+                                break;
+                            case 3:
+                                s.setCondition(InitData.getConditionRed());
+                                System.out.println("변경을 완료 했습니다.");
+                                break;
+                            default:
+                                System.out.println("입력을 잘못 하셨습니다.");
+                        }
+                    }
+                }
+            } else {
+                System.out.println("잘못 입력 하셨습니다.");
+            }
+        }
+    }
 }
+
