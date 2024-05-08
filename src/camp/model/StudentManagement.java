@@ -143,80 +143,95 @@ public class StudentManagement {
         }
 
     }
-
+    //학생 이름 수정 메서드(빈 리스트 및 ST로 미입력시 fail, 잘못 입력했을때의 구현은x)
     public void adjustStudentName() {
         String stid;
         String stname;
+        if (InitData.getStudentStore().isEmpty()) {
+            System.out.println("수강생 목록이 비어 있습니다. 수강생 등록 먼저 진행해 주세요");
+        } else {
+            System.out.println("==================================");
+            System.out.println("이름 변경하기를 선택 하셨습니다. 변경하실 이름의 수강생 번호(ST%)를 입력 해주세요");
+            stid = sc.next();
 
-        System.out.println("==================================");
-        System.out.println("이름 변경하기를 선택 하셨습니다. 변경하실 이름의 수강생 번호(ST%)를 입력 해주세요");
-        stid = sc.next();
+            if (stid.contains("ST")) {
+                System.out.println("변경전 이름 ");
+                for (Student s : InitData.getStudentStore()) {
+                    if (s.getStudentId().equals(stid)) {
+                        System.out.println(s.getStudentName());
+                    }
+                }
 
-        System.out.println("변경전 이름 ");
-        for (Student s : InitData.getStudentStore()) {
-            if (s.getStudentId().equals(stid)) {
-                System.out.println(s.getStudentName());
+                System.out.println("변경하실 이름을 입력 해주세요");
+                stname = sc.next();
+
+                System.out.println("변경후 이름 이름 ");
+                for (Student s : InitData.getStudentStore()) {
+                    if (s.getStudentId().equals(stid)) {
+                        s.setStudentName(stname);
+                        System.out.println(s.getStudentName());
+                    }
+                }
+                System.out.println("변경완료 ");
+            } else {
+                System.out.println("잘못 입력 하셨습니다.");
             }
         }
-
-        System.out.println("변경하실 이름을 입력 해주세요");
-        stname = sc.next();
-
-        System.out.println("변경후 이름 이름 ");
-        for (Student s : InitData.getStudentStore()) {
-            if (s.getStudentId().equals(stid)) {
-                s.setStudentName(stname);
-                System.out.println(s.getStudentName());
-            }
-        }
-        System.out.println("변경완료 ");
-
     }
-
+    //수강생 상태 변경하는 메서드
     public void adjustStudentCondition() {
         String stid;
         int input = 0;
         //boolean check = true;
+        if (InitData.getStudentStore().isEmpty()) {
+            System.out.println("수강생 목록이 비어 있습니다. 수강생 등록 먼저 진행해 주세요");
+        } else {
 
-        System.out.println("==================================");
-        System.out.println("상태 변경하기를 선택 하셨습니다. 변경하실 이름의 수강생 번호(ST%)를 입력 해주세요");
-        stid = sc.next();
+            System.out.println("==================================");
+            System.out.println("상태 변경하기를 선택 하셨습니다. 변경하실 이름의 수강생 번호(ST%)를 입력 해주세요");
+            stid = sc.next();
+            if (stid.contains("ST")) {
 
-
-        for (Student s : InitData.getStudentStore()) {
-            if (s.getStudentId().equals(stid)) {
-                System.out.println("변경전 상태");
-                System.out.println(s.getCondition());
-            }
-        }
-
-
-        System.out.println("어떤 상태로 변경 하시겠습니까?");
-        System.out.println("1. Green : Good");
-        System.out.println("2. Yellow : So So");
-        System.out.println("2. Red : Bad");
-        input = sc.nextInt();
-        for (Student s : InitData.getStudentStore()) {
-            if (s.getStudentId().equals(stid)) {
-                switch (input) {
-                    case 1:
-                        s.setCondition(InitData.getConditionGreen());
-                        System.out.println("변경을 완료 했습니다.");
-                        break;
-                    case 2:
-                        s.setCondition(InitData.getConditionYellow());
-                        System.out.println("변경을 완료 했습니다.");
-                        break;
-                    case 3:
-                        s.setCondition(InitData.getConditionRed());
-                        System.out.println("변경을 완료 했습니다.");
-                        break;
-                    default:
-                        System.out.println("입력을 잘못 하셨습니다.");
+                for (Student s : InitData.getStudentStore()) {
+                    if (s.getStudentId().equals(stid)) {
+                        System.out.println("변경전 상태");
+                        System.out.println(s.getCondition());
+                    }
                 }
+
+
+                System.out.println("어떤 상태로 변경 하시겠습니까?");
+                System.out.println("1. Green : Good");
+                System.out.println("2. Yellow : So So");
+                System.out.println("3. Red : Bad");
+
+                input = sc.nextInt();
+
+
+                for (Student s : InitData.getStudentStore()) {
+                    if (s.getStudentId().equals(stid)) {
+                        switch (input) {
+                            case 1:
+                                s.setCondition(InitData.getConditionGreen());
+                                System.out.println("변경을 완료 했습니다.");
+                                break;
+                            case 2:
+                                s.setCondition(InitData.getConditionYellow());
+                                System.out.println("변경을 완료 했습니다.");
+                                break;
+                            case 3:
+                                s.setCondition(InitData.getConditionRed());
+                                System.out.println("변경을 완료 했습니다.");
+                                break;
+                            default:
+                                System.out.println("입력을 잘못 하셨습니다.");
+                        }
+                    }
+                }
+            } else {
+                System.out.println("잘못 입력 하셨습니다.");
             }
         }
-
     }
 }
 

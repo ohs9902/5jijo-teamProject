@@ -106,11 +106,6 @@ public class CampManagementApplication {
             }
         }
     }
-
-
-
-
-
     // 수강생 목록 조회
 
 
@@ -127,11 +122,4 @@ public class CampManagementApplication {
 
 } // 맨 마지막
     // 수강생의 과목별 회차 점수 수정
-    private static void updateRoundScoreBySubject() {
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        // 기능 구현 (수정할 과목 및 회차, 점수)
-        System.out.println("시험 점수를 수정합니다...");
-        // 기능 구현
-        System.out.println("\n점수 수정 성공!");
-    }
-}
+
