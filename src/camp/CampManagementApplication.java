@@ -224,11 +224,74 @@ public class CampManagementApplication {
     // 수강생의 과목별 회차 점수 수정
     private static void updateRoundScoreBySubject() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
-        // 기능 구현 (수정할 과목 및 회차, 점수)
-        System.out.println("시험 점수를 수정합니다...");
-        // 기능 구현
-        System.out.println("\n점수 수정 성공!");
+
+        // 해당 수강생이 존재하는지 확인
+        Student student = findStudentById(studentId);
+        if (student != null) {
+            System.out.println("\n수정할 과목을 선택하세요:");
+            displaySubjects(); // 모든 과목 목록을 보여줌
+
+            System.out.print("과목 번호를 입력하세요: ");
+            int subjectIndex = sc.nextInt();
+
+            // 입력한 번호에 해당하는 과목을 찾아옴
+            Subject selectedSubject = subjectStore.get(subjectIndex - 1);
+
+            // 해당 수강생의 해당 과목 점수 조회
+            Score score = findScore(studentId, selectedSubject);
+
+            if (score != null) {
+                System.out.println("\n현재 " + selectedSubject.getSubjectName() + "의 시험 점수는 " + score.getScore() + "입니다.");
+
+                System.out.print("수정할 회차를 입력하세요: ");
+                int round = sc.nextInt();
+
+                System.out.print("수정할 점수를 입력하세요: ");
+                double newScore = sc.nextDouble();
+
+                // 기존 점수를 업데이트
+                score.setScore(newScore);
+                System.out.println("시험 점수가 수정되었습니다.");
+            } else {
+                System.out.println("\n해당 수강생의 " + selectedSubject.getSubjectName() + " 과목 시험 점수가 없습니다.");
+            }
+        } else {
+            System.out.println("\n해당하는 학생을 찾을 수 없습니다.");
+        }
     }
+
+    // 수강생 ID와 과목으로 점수 찾기
+    private static Score findScore(String studentId, Subject subject) {
+        for (Score score : scoreStore) {
+            if (score.getScoreId().equals(studentId) && score.getScoreId().equals(subject.getSubjectId())) {
+                return score;
+            }
+        }
+        return null;
+    }
+
+    // 모든 과목을 화면에 출력하는 메서드
+    private static void displaySubjects() {
+        System.out.println("==================================");
+        System.out.println("과목 목록:");
+        for (int i = 0; i < subjectStore.size(); i++) {
+            Subject subject = subjectStore.get(i);
+            System.out.println((i + 1) + ". " + subject.getSubjectName());
+        }
+    }
+
+    // 수강생 ID로 수강생 찾기
+    private static Student findStudentById(String studentId) {
+        for (Student student : studentStore) {
+            if (student.getStudentId().equals(studentId)) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+
+
 
     // --------- 어동선 --------
     // 수강생의 특정 과목 회차별 등급 조회

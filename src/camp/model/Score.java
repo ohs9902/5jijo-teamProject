@@ -27,4 +27,7 @@ public class Score {
     public Object getStudentId() {
         return scoreId;
     }
+
+    public void setScore(double newScore) {
+    }
 }
