@@ -3,12 +3,11 @@ package camp.model;
 public class Student {
     private String studentId;
     private String studentName;
-    private String condition;
+    private String condition = InitData.getConditionYellow();
 
-    public Student(String seq, String studentName ,String condition) {
+    public Student(String seq, String studentName ) {
         this.studentId = seq;
         this.studentName = studentName;
-        this.condition = condition;
     }
 
     // Getter

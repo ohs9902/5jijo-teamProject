@@ -10,6 +10,7 @@ public class StudentManagement {
     public void createStudent() {
         int count = 1;
         int input;
+
         System.out.println("\n수강생을 등록합니다...");
         System.out.print("수강생 이름 입력: ");
 
@@ -18,9 +19,10 @@ public class StudentManagement {
         Subject subject;
         String[] mandatory = new String[3];
         String[] choice = new String[2];
+        String comparesubject = "";
 
         //수강생 상태를 추가 할때 컨디션(상태) 추가!, 기본값 Yellow
-        student = new Student(InitData.sequence(InitData.getIndexTypeStudent()), studentName, InitData.getConditionYellow());
+        student = new Student(InitData.sequence(InitData.getIndexTypeStudent()), studentName);
 
         String studentId = student.getStudentId();
 
@@ -34,39 +36,57 @@ public class StudentManagement {
             System.out.println("5. MySQL");
 
             input = sc.nextInt();
+
+            if(comparesubject.contains(Integer.toString(input))){
+                System.out.println("중복 값이 있습니다. 다시 시도해주세요");
+                i--;
+                continue;
+            }
+
             switch (input) {
                 case 1:
                     mandatory[i] = "Java";
                     subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i], InitData.getSubjectTypeMandatory(), studentId);
                     InitData.getSubjectStore().add(subject);
+                    comparesubject = comparesubject + input;
                     break;
                 case 2:
                     mandatory[i] = "객체지향";
                     subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i], InitData.getSubjectTypeMandatory(), studentId);
                     InitData.getSubjectStore().add(subject);
+                    comparesubject = comparesubject + input;
                     break;
                 case 3:
                     mandatory[i] = "Spring";
                     subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i], InitData.getSubjectTypeMandatory(), studentId);
                     InitData.getSubjectStore().add(subject);
+                    comparesubject = comparesubject + input;
                     break;
                 case 4:
                     mandatory[i] = "JPA";
                     subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i], InitData.getSubjectTypeMandatory(), studentId);
                     InitData.getSubjectStore().add(subject);
+                    comparesubject = comparesubject + input;
                     break;
                 case 5:
                     mandatory[i] = "MySQL";
                     subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), mandatory[i], InitData.getSubjectTypeMandatory(), studentId);
                     InitData.getSubjectStore().add(subject);
+                    comparesubject = comparesubject + input;
                     break;
                 default:
                     System.out.println("잘못 입력하셨습니다");
+                    i--;
+                    count--;
                     break;
             }
             count++;
         }
+
+        //선택 과목 진행을 위해 초기화
+        comparesubject = "";
         count = 1;
+
         for (int i = 0; i < choice.length; i++) {
             System.out.println("==================================");
             System.out.println("선택 과목 2과목을 입력해 주세요..." + count + " 번째");
@@ -76,29 +96,41 @@ public class StudentManagement {
             System.out.println("4. MongoDB");
             input = sc.nextInt();
 
+            if(comparesubject.contains(Integer.toString(input))){
+                System.out.println("중복 값이 있습니다. 다시 시도해주세요");
+                i--;
+                continue;
+            }
+
             switch (input) {
                 case 1:
                     choice[i] = "디자인 패턴";
                     subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), choice[i], InitData.getSubjectTypeChoice(), studentId);
                     InitData.getSubjectStore().add(subject);
+                    comparesubject = comparesubject + input;
                     break;
                 case 2:
                     choice[i] = "Spring Security";
                     subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), choice[i], InitData.getSubjectTypeChoice(), studentId);
                     InitData.getSubjectStore().add(subject);
+                    comparesubject = comparesubject + input;
                     break;
                 case 3:
                     choice[i] = "Redis";
                     subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), choice[i], InitData.getSubjectTypeChoice(), studentId);
                     InitData.getSubjectStore().add(subject);
+                    comparesubject = comparesubject + input;
                     break;
                 case 4:
                     choice[i] = "MongoDB";
                     subject = new Subject(InitData.sequence(InitData.getIndexTypeSubject()), choice[i], InitData.getSubjectTypeChoice(), studentId);
                     InitData.getSubjectStore().add(subject);
+                    comparesubject = comparesubject + input;
                     break;
                 default:
                     System.out.println("잘못 입력하셨습니다");
+                    i--;
+                    count--;
                     break;
             }
             count++;
@@ -140,6 +172,8 @@ public class StudentManagement {
         switch (input) {
             case 1 -> adjustStudentName();
             case 2 -> adjustStudentCondition();
+            case 3 -> System.out.println("메인 화면 이동...");
+            default -> System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
         }
 
     }
@@ -180,13 +214,13 @@ public class StudentManagement {
     }
     //수강생 상태 변경하는 메서드
     public void adjustStudentCondition() {
+
         String stid;
         int input = 0;
         //boolean check = true;
         if (InitData.getStudentStore().isEmpty()) {
             System.out.println("수강생 목록이 비어 있습니다. 수강생 등록 먼저 진행해 주세요");
         } else {
-
             System.out.println("==================================");
             System.out.println("상태 변경하기를 선택 하셨습니다. 변경하실 이름의 수강생 번호(ST%)를 입력 해주세요");
             stid = sc.next();
