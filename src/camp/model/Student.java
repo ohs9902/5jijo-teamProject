@@ -8,6 +8,7 @@ public class Student {
     public Student(String seq, String studentName) {
         this.studentId = seq;
         this.studentName = studentName;
+
     }
 
     // Getter
