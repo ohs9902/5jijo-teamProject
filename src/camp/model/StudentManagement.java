@@ -268,7 +268,8 @@ public class StudentManagement {
             }
         }
     }
-
+    // 상태별로 수강생을 조회 할수 있도록 해주는 매서드
+    // for문이 너무 많은거 같아 conditionDetail을 호출해서 작업하도록 변경
     public void conditionList(){
         int input ;
         System.out.println("==================================");
