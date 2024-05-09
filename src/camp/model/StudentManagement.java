@@ -259,6 +259,7 @@ public class StudentManagement {
                                 break;
                             default:
                                 System.out.println("입력을 잘못 하셨습니다.");
+                                break;
                         }
                     }
                 }
@@ -267,5 +268,48 @@ public class StudentManagement {
             }
         }
     }
+
+    public void conditionList(){
+        int input ;
+        System.out.println("==================================");
+        System.out.println("상태별로 수강생들의 리스트를 확인 할수 있는 화면 입니다.");
+        System.out.println("어떤 상태의 리스트를 확인 해보겠습니까?.");
+        System.out.println("1. Green : Good");
+        System.out.println("2. Yellow : So So");
+        System.out.println("3. Red : Bad");
+        input =sc.nextInt();
+
+
+        switch (input) {
+            case 1:
+                System.out.println("컨디션이 좋은 학생 리스트 입니다.");
+                for (Student s : InitData.getStudentStore()) {
+                    if (s.getCondition().equals(InitData.getConditionGreen())) {
+                        System.out.println("이름 : " + s.getStudentName() + " / " + "상태 : " + s.getCondition() + " / " + "수강생 번호 : " + s.getStudentId());
+                    }
+                }
+                break;
+            case 2:
+                System.out.println("컨디션이 보통인 학생 리스트 입니다.");
+                for (Student s : InitData.getStudentStore()) {
+                    if (s.getCondition().equals(InitData.getConditionYellow())) {
+                        System.out.println("이름 : " + s.getStudentName() + " / " + "상태 : " + s.getCondition() + " / " + "수강생 번호 : " + s.getStudentId());
+                    }
+                }
+                break;
+            case 3:
+                System.out.println("컨디션이 안좋은 학생 리스트 입니다.");
+                for (Student s : InitData.getStudentStore()) {
+                    if (s.getCondition().equals(InitData.getConditionRed())) {
+                        System.out.println("이름 : " + s.getStudentName() + " / " + "상태 : " + s.getCondition() + " / " + "수강생 번호 : " + s.getStudentId());
+                    }
+                }
+                break;
+            default:
+                System.out.println("입력을 잘못 하셨습니다.");
+                break;
+        }
+    }
+
 }
 
