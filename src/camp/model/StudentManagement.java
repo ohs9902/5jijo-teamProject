@@ -283,27 +283,15 @@ public class StudentManagement {
         switch (input) {
             case 1:
                 System.out.println("컨디션이 좋은 학생 리스트 입니다.");
-                for (Student s : InitData.getStudentStore()) {
-                    if (s.getCondition().equals(InitData.getConditionGreen())) {
-                        System.out.println("이름 : " + s.getStudentName() + " / " + "상태 : " + s.getCondition() + " / " + "수강생 번호 : " + s.getStudentId());
-                    }
-                }
+                conditionDetail(InitData.getConditionGreen());
                 break;
             case 2:
                 System.out.println("컨디션이 보통인 학생 리스트 입니다.");
-                for (Student s : InitData.getStudentStore()) {
-                    if (s.getCondition().equals(InitData.getConditionYellow())) {
-                        System.out.println("이름 : " + s.getStudentName() + " / " + "상태 : " + s.getCondition() + " / " + "수강생 번호 : " + s.getStudentId());
-                    }
-                }
+                conditionDetail(InitData.getConditionYellow());
                 break;
             case 3:
                 System.out.println("컨디션이 안좋은 학생 리스트 입니다.");
-                for (Student s : InitData.getStudentStore()) {
-                    if (s.getCondition().equals(InitData.getConditionRed())) {
-                        System.out.println("이름 : " + s.getStudentName() + " / " + "상태 : " + s.getCondition() + " / " + "수강생 번호 : " + s.getStudentId());
-                    }
-                }
+                conditionDetail(InitData.getConditionRed());
                 break;
             default:
                 System.out.println("입력을 잘못 하셨습니다.");
@@ -311,5 +299,12 @@ public class StudentManagement {
         }
     }
 
+    public void conditionDetail(String condition){
+        for (Student s : InitData.getStudentStore()) {
+            if (s.getCondition().equals(condition)) {
+                System.out.println("이름 : " + s.getStudentName() + " / " + "상태 : " + s.getCondition() + " / " + "수강생 번호 : " + s.getStudentId());
+            }
+        }
+    }
 }
 
